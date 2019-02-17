@@ -1,0 +1,59 @@
+    <form  name="f"> 
+      <div class="row">
+        <div class="col-xs-6 col-md-4">
+          <div class="input-group">
+              <input type="text" class="form-control" id="git-hub-Rep-URL" name="RepoURL"  [(ngModel)]="RepoURL" placeholder="https://github.com/..." pattern ="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/">
+          
+                <button  id="searchBar" 
+                type="submit" 
+                class="btn btn-primary " 
+                (click)="searchIssues(RepoURL)"
+                >Search</button>
+            
+          </div>
+        </div>
+      </div>
+    </form>
+    <table id="issuesTable" class="table table-hover col-10" *ngIf="issues">
+      <thead>
+        <th>User</th>
+        <th>Title</th>
+        <th>Create date</th>
+        <th>Update date</th>
+        <th>Locked</th>
+        <th>State</th>
+        <th>Details</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let issue of issues | paginate: { itemsPerPage: 10, currentPage: p }">
+          <td>
+              <a [attr.href]="issue.user.html_url" target="_blank">
+            <img [src]="issue.user.avatar_url" class="avatar" height="20" width="20" > {{issue.user.login}}</a>   
+            </td>           
+            <td>
+              <a [attr.href]="issue.html_url" target="_blank">{{issue.title}}</a> 
+            </td> 
+            <td>
+              {{issue.created_at | date:'medium'}}
+              </td> 
+              <td>
+                  {{issue.updated_at | date:'medium'}}
+                </td> 
+                <td [ngSwitch]="issue.locked">
+                    <span *ngSwitchCase="false" class="label text-default">No</span> 
+                    <span *ngSwitchCase="true" class="label  text-danger">Yes</span> 
+                    <span *ngSwitchDefault class="label text-default">{{issue.locked}}</span>             
+                    </td>            
+                
+            <td [ngSwitch]="issue.state">
+              <span *ngSwitchCase="'closed'" class="label text-success">{{issue.state}}</span> 
+              <span *ngSwitchCase="'open'" class="label  text-warning">{{issue.state}}</span> 
+              <span *ngSwitchDefault class="label text-default">{{issue.state}}</span>             
+              </td>            
+              <td>
+              <button class="btn btn-info" (click)="viewIssue(issue)">show</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls *ngIf="issues" (pageChange)="p = $event"></pagination-controls>
