@@ -1,3 +1,4 @@
+//Modelo que devuelve la API
 export interface issuesInterface{
 
     url?: string;

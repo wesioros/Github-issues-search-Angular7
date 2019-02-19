@@ -11,19 +11,13 @@ export class GitHubIssuesAPIService {
   constructor(private http: HttpClient) { }
 
   //Obtener issues
-getIssuesFromUrl(RepoURL){
+  getIssuesFromUrl(RepoURL){
 
-const url_api="https://api.github.com/repos"+RepoURL+"/issues?state=all";
+  const url_api="https://api.github.com/repos"+RepoURL+"/issues?state=all";
 
-return this.http.get(url_api);
+  return this.http.get(url_api);
   
+    }
 
-}
-//Me obtengo el html de la issue para pintarlo en el modal
-getIssueHtml(issueUrl){
-
-  return this.http.get(issueUrl);
-
-}
 
 }

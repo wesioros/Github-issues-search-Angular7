@@ -1,16 +1,17 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {GitHubIssuesAPIService} from '../../services/git-hub-issues-api.service';
 import {issuesInterface} from '../../models/issues-interface';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalContentComponent } from '../modal-content-component/modal-content-component.component';
 import { retry, catchError } from 'rxjs/operators';
-import { NgModule } from '@angular/core';
+
 @Component({
   selector: 'app-issues-table',
   templateUrl: './issues-table.component.html',
   styleUrls: ['./issues-table.component.css']
 })
+
 @NgModule({
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
@@ -59,9 +60,16 @@ export class IssuesTableComponent implements OnInit {
       catchError(this.handleError)
     )
     .subscribe((issues: issuesInterface)=> this.issues = issues)
-    subscription.add(this.spinnerService.hide())
+    subscription.add(this.hideSpinner())
       }
-      
+      //Dejo un tiempo ya que tarda un poco en renderizar los avatares
+      hideSpinner(){
+        setTimeout(() => {
+        this.spinnerService.hide()
+      }, 300);
+       
+
+      }
     //Modal para ver el detalle de la issue
       viewIssue(issue){
 
@@ -78,7 +86,7 @@ export class IssuesTableComponent implements OnInit {
     
       //Manejar errores
       private handleError(error: any): Promise<any> {
-        //console.error('An error occurred', error); // pruebas       
+        //console.error('error producido', error); // pruebas       
         alert("Error URL " + error.statusText)
         return Promise.reject(error.message || error);
      }

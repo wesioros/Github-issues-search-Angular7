@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import {NgxSpinnerService} from 'ngx-spinner';
 import { IssuesTableComponent } from '../app/components/issues-table/issues-table.component';
+import { Component,NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -27,7 +28,7 @@ describe('AppComponent', () => {
   it(`should have as title 'git-hub-issues-search'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('ng7-pre');
+    expect(app.title).toEqual('git-hub-issues-search');
   });
 
   it('should render title in a h1 tag', () => {
