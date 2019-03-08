@@ -13,8 +13,7 @@ export class GitHubIssuesAPIService {
   //Obtener issues
   getIssuesFromUrl(RepoURL, pageActual, itemsPerPage){
 
-  const url_api="https://api.github.com/search/issues?q=repo"+RepoURL+"/issues?state=all&page="+pageActual+"&per_page="+itemsPerPage+"";
- 
+  const url_api="https://api.github.com/search/issues?q=repo:"+RepoURL+"/node+type:issue&page="+pageActual+"&per_page="+itemsPerPage+"";
   return this.http.get(url_api);
   
     }

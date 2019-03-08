@@ -44,6 +44,7 @@ export class IssuesTableComponent implements OnInit {
         
         //Extraigo lo que necesito de la URL
         RepoURL = new URL(RepoURL).pathname;
+        RepoURL = RepoURL.slice(1,RepoURL.length);
         //Dejo un mínimo tiempo para que se vea el spinner y quede claro que esta pasando algo   
         setTimeout(() => {
         //obtengo issues   
