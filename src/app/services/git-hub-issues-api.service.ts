@@ -11,10 +11,10 @@ export class GitHubIssuesAPIService {
   constructor(private http: HttpClient) { }
 
   //Obtener issues
-  getIssuesFromUrl(RepoURL){
+  getIssuesFromUrl(RepoURL, pageActual, itemsPerPage){
 
-  const url_api="https://api.github.com/repos"+RepoURL+"/issues?state=all";
-
+  const url_api="https://api.github.com/search/issues?q=repo"+RepoURL+"/issues?state=all&page="+pageActual+"&per_page="+itemsPerPage+"";
+ 
   return this.http.get(url_api);
   
     }

@@ -1,5 +1,16 @@
 //Modelo que devuelve la API
-export interface issuesInterface{
+
+//Modelo completo
+export interface issuesListInterface{
+    total_count: Int16Array,
+    incomplete_results: boolean,
+    items: Array<issuesItemInterface>
+
+}
+
+
+//Cuerpo de la issue
+export interface issuesItemInterface{
 
     url?: string;
     repository_url?: string;
@@ -11,7 +22,11 @@ export interface issuesInterface{
     node_id?: string;
     number?: Int16Array;
     title?: string,
-    user?: {
+    user?:userInterface
+}
+//Cuerpo usuario
+export interface userInterface{
+   
         login?: string;
         id?: Int16Array;
         node_id?: string;
@@ -31,6 +46,4 @@ export interface issuesInterface{
         type?: string;
         site_admin?: boolean
 
-
-}
 }

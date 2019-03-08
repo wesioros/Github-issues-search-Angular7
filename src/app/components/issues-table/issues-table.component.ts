@@ -1,6 +1,6 @@
 import { NgModule, Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {GitHubIssuesAPIService} from '../../services/git-hub-issues-api.service';
-import {issuesInterface} from '../../models/issues-interface';
+import {issuesListInterface, issuesItemInterface, userInterface} from '../../models/issues-interface';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalContentComponent } from '../modal-content-component/modal-content-component.component';
@@ -18,8 +18,13 @@ import { retry, catchError } from 'rxjs/operators';
 export class IssuesTableComponent implements OnInit {
   
   //Declaro la variable de tipo issuesInterface
-  private issues: issuesInterface;
+  private issues: issuesListInterface;
+  
+  pageActual:number = 1;
   modalRef: BsModalRef;
+  total: number = 0;
+  itemPerPage: number = 10;
+  
   constructor(private dataApi:GitHubIssuesAPIService,
               private spinnerService:NgxSpinnerService, 
               private modalService: BsModalService
@@ -50,16 +55,17 @@ export class IssuesTableComponent implements OnInit {
       }
    
     }
-  
+
+
   //LLamada a la API 
   getIssuesRepository(RepoURL){
     
     //Respuesta   
-   const subscription= this.dataApi.getIssuesFromUrl(RepoURL).pipe(
+   const subscription= this.dataApi.getIssuesFromUrl(RepoURL, this.pageActual, this.itemPerPage).pipe(
       retry(1),
       catchError(this.handleError)
     )
-    .subscribe((issues: issuesInterface)=> this.issues = issues)
+    .subscribe((issues: issuesListInterface)=> this.issues = issues)
     subscription.add(this.hideSpinner())
       }
       //Dejo un tiempo ya que tarda un poco en renderizar los avatares
